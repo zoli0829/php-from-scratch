@@ -1,47 +1,85 @@
 <?php
-
-class User
+interface ContentInterface
 {
-    // Properties
-    public $name;
-    public $email;
-    private $status = "active";
+    public function display();
+    public function edit();
+}
 
-    public function __construct($name, $email)
+class Article implements ContentInterface
+{
+    private $title;
+    private $content;
+
+    public function __construct($title, $content)
     {
-        $this->name = $name;
-        $this->email = $email;
+        $this->title = $title;
+        $this->content = $content;
     }
 
-    // Methods
-    public function login()
+    public function display()
     {
-        echo $this->name . ' logged in <br>';
+        echo "<h2>{$this->title}</h2>";
+        echo "<p>{$this->content}</p>";
     }
 
-    // Getters
-    public function getStatus()
+    public function edit()
     {
-        echo $this->status;
-    }
-
-    // Setters
-    public function setStatus($status)
-    {
-        $this->status = $status;
+        echo "Editing article '{$this->title}'";
     }
 }
 
-// Instantiate a new object
-$user1 = new User('John Doe', 'john@gmail.com');
+class Video implements ContentInterface
+{
+    private $title;
+    private $url;
 
-$user1->login();
+    public function __construct($title, $url)
+    {
+        $this->title = $title;
+        $this->url = $url;
+    }
 
-$user2 = new User('Jane Doe', 'jane@gmail.com');
+    public function display()
+    {
+        echo "<h2>{$this->title}</h2>";
+        echo "<iframe src='{$this->url}'></iframe>";
+    }
 
-$user2->login();
+    public function edit()
+    {
+        echo "Editing the video '{$this->title}'";
+    }
+}
 
-$user2->setStatus("inactive");
-$user2->getStatus();
+$article = new Article("Article Title", "Article Content");
+$video = new Video("PHP for beginners", "https://www.youtube.com/watch?v=L6H34ox6Q4M&ab_channel=Challacade");
+?>
+<!DOCTYPE html>
+<html lang="en">
 
-// var_dump($user2);
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PHP From Scratch</title>
+</head>
+
+<body class="bg-gray-100">
+    <header class="bg-blue-500 text-white p-4">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-semibold">PHP From Scratch</h1>
+        </div>
+    </header>
+    <div class="container mx-auto p-4 mt-4">
+        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+            <!-- Output -->
+            <?= $article->display(); ?>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+            <!-- Output -->
+            <?= $video->display(); ?>
+        </div>
+    </div>
+</body>
+
+</html>
