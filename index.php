@@ -1,85 +1,49 @@
 <?php
-interface ContentInterface
+putenv("DB_HOST=localhost");
+putenv("DB_USER=root");
+
+$host = getenv("DB_HOST");
+$user = getenv("DB_USER");
+
+$foo = "Foo global";
+
+function test()
 {
-    public function display();
-    public function edit();
+    $foo = "Foo Local";
+    echo "Global variable " . $GLOBALS["foo"] . "<br>";
+    echo "Local variable " . $foo . "<br>";
 }
 
-class Article implements ContentInterface
-{
-    private $title;
-    private $content;
+$foo = "Hello";
 
-    public function __construct($title, $content)
-    {
-        $this->title = $title;
-        $this->content = $content;
-    }
-
-    public function display()
-    {
-        echo "<h2>{$this->title}</h2>";
-        echo "<p>{$this->content}</p>";
-    }
-
-    public function edit()
-    {
-        echo "Editing article '{$this->title}'";
-    }
-}
-
-class Video implements ContentInterface
-{
-    private $title;
-    private $url;
-
-    public function __construct($title, $url)
-    {
-        $this->title = $title;
-        $this->url = $url;
-    }
-
-    public function display()
-    {
-        echo "<h2>{$this->title}</h2>";
-        echo "<iframe src='{$this->url}'></iframe>";
-    }
-
-    public function edit()
-    {
-        echo "Editing the video '{$this->title}'";
-    }
-}
-
-$article = new Article("Article Title", "Article Content");
-$video = new Video("PHP for beginners", "https://www.youtube.com/watch?v=L6H34ox6Q4M&ab_channel=Challacade");
+test();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Information</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>PHP From Scratch</title>
 </head>
 
 <body class="bg-gray-100">
-    <header class="bg-blue-500 text-white p-4">
-        <div class="container mx-auto">
-            <h1 class="text-3xl font-semibold">PHP From Scratch</h1>
+    <div class="container mx-auto p-8 bg-white shadow-md mt-10 rounded-lg">
+        <h1 class="text-3xl font-semibold mb-4 text-center">System Information</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div class="bg-gray-200 p-4 rounded-lg">
+                <strong class="block mb-2">DB Host:</strong>
+                <?= $host; ?>
+            </div>
+            <div class="bg-gray-200 p-4 rounded-lg">
+                <strong class="block mb-2">DB User:</strong>
+                <?= $user; ?>
+            </div>
+
         </div>
-    </header>
-    <div class="container mx-auto p-4 mt-4">
-        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
-            <!-- Output -->
-            <?= $article->display(); ?>
-        </div>
-        <div class="bg-white rounded-lg shadow-md p-6 mt-6">
-            <!-- Output -->
-            <?= $video->display(); ?>
-        </div>
-    </div>
 </body>
 
 </html>

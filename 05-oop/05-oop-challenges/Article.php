@@ -23,8 +23,8 @@ class Article
     }
 }
 
-$article1 = new Article("How to train your dragon", "This is a story about how to train your dragon", "lorem ipsum 50");
-$article2 = new Article("How to train your dragon", "This is a story about how to train your php developer", "lorem ipsum 10000");
+$article1 = new Article("How to train your dragon", "This is a story about how to train your dragon");
+$article2 = new Article("How to train your dragon", "This is a story about how to train your php developer");
 
 $article1->publish();
 
